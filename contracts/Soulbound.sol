@@ -4,7 +4,9 @@ pragma solidity ^0.8.9;
 // Import this file to use console.log
 import "hardhat/console.sol";
 
-contract Soulbound {
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+
+contract Soulbound is Initializable{
     uint public unlockTime;
     address payable public owner;
     mapping(address => string) public soulInfo;
@@ -21,6 +23,12 @@ contract Soulbound {
         unlockTime = _unlockTime;
         owner = payable(msg.sender);
     }
+
+    function init(address payable _genesis) public initializer {
+        owner = _genesis;
+    } 
+
+
     function ownerOf(uint256 index) external view returns (address soulAddress, uint256 soulId) {
 
 
